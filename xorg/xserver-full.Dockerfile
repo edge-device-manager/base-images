@@ -12,7 +12,7 @@ RUN sed -E -i.bak 's/(static const int showbar *= *)\d;/\10;/' config.h
 # topbar = 0 - hide interactive top taskbar
 RUN sed -E -i.bak 's/(static const int topbar *= *)\d;/\10;/' config.h
 # resizehints = 0 - to avoid misaligned windows
-RUN sed -E -i.bak 's/(static const int topbar *= *)\d;/\10;/' config.h
+RUN sed -E -i.bak 's/(static const int resizehints *= *)\d;/\10;/' config.h
 RUN make
 
 
