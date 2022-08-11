@@ -52,3 +52,4 @@ jobs:
           echo VERSION=$VERSION
 
           docker buildx build --platform linux/amd64,linux/arm64 --push -t $IMAGE_PREFIX/iperf3:$VERSION iperf3
+          docker buildx build --platform linux/amd64,linux/arm64 --push -t $IMAGE_PREFIX/xserver:$VERSION -f xorg/xserver-full.Dockerfile xorg
