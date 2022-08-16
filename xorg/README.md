@@ -1,4 +1,4 @@
-## xorg docker images
+# xorg docker images
 
 Contains xorg images with x11vnc, dwm tiling manager with no UI
 
