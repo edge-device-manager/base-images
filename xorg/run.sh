@@ -4,14 +4,6 @@ if [ ! -z $RESOLUTION ]; then
     echo "**** Starting VFB $RESOLUTION at $DISPLAY"
     Xvfb $DISPLAY -screen 0 $RESOLUTION &
 else
-    SOCKET="/tmp/.X11-unix/$(echo $DISPLAY | sed -e "s/:/X/g")"
-    echo "**** Checking socket $SOCKET"
-
-    if [ -S "$SOCKET" ]; then
-        echo "Socket already exists"
-        exit 1
-    fi
-
     echo "**** Starting X server"
     /usr/bin/X -nocursor &
 fi
