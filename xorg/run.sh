@@ -17,7 +17,7 @@ else
 fi
 
 echo "**** Waiting for X server to start"
-while ! xset q > /dev/null 2>&1 ; do
+while ! timeout 5 xset q > /dev/null 2>&1 ; do
     sleep 1
 done
 
