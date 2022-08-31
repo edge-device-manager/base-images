@@ -37,7 +37,7 @@ jobs:
 
       - name: Build & Push image
         run: |
-          IMAGE_PREFIX=ghcr.io/${{ github.repository }}
+          REPO=ghcr.io/${{ github.repository }}
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
@@ -48,8 +48,9 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
 
-          echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
+          PLATFORMS_OPTS='--platform linux/amd64,linux/arm64'
 
-          docker buildx build --platform linux/amd64,linux/arm64 --push -t $IMAGE_PREFIX/iperf3:$VERSION iperf3
-          docker buildx build --platform linux/amd64,linux/arm64 --push -t $IMAGE_PREFIX/xserver:$VERSION -f xorg/xserver-full.Dockerfile xorg
+          docker buildx build --push $PLATFORMS_OPTS -t $REPO/iperf3:$VERSION  iperf3
+          docker buildx build --push $PLATFORMS_OPTS -t $REPO/xserver:$VERSION xorg
+          docker buildx build --push $PLATFORMS_OPTS -t $REPO/xapps:$VERSION   xorg-apps

@@ -1,4 +1,4 @@
-FROM alpine:3.15.0 as dwm-builder
+FROM alpine:3.16.2 as dwm-builder
 
 RUN apk add build-base git libx11-dev libxft-dev libxinerama-dev freetype-dev
 WORKDIR /ws
@@ -16,9 +16,9 @@ RUN sed -E -i.bak 's/(static const int resizehints *= *)\d;/\10;/' config.h
 RUN make
 
 
-FROM alpine:3.15.0
+FROM alpine:3.16.2
 
-RUN apk update && apk add xorg-server mesa-dri-gallium mesa-egl mesa-demos mesa-va-gallium mesa-vdpau-gallium xf86-video-fbdev xf86-video-vesa
+RUN apk update && apk add xorg-server mesa-dri-gallium mesa-egl mesa-demos mesa-va-gallium mesa-vdpau-gallium xf86-video-fbdev xf86-video-vesa libxft xset
 RUN if [ "x86_64" = "$(uname -m)" ] ; then apk add xf86-video-qxl xf86-video-nouveau xf86-video-vmware ; fi
 
 
@@ -29,7 +29,9 @@ RUN apk add x11vnc xvfb
 COPY --from=dwm-builder /ws/dwm/dwm /usr/bin/dwm
 
 # display tweak
-COPY scripts/xorg/10-monitor.conf /etc/X11/xorg.conf.d/10-monitor.conf
+COPY 10-monitor.conf /etc/X11/xorg.conf.d/10-monitor.conf
 
-CMD /usr/bin/X -nocursor
+#CMD /usr/bin/X -nocursor
 
+COPY run.sh .
+CMD ./run.sh
